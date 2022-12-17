@@ -1,0 +1,20 @@
+{
+  "name": "practica-consumo-api",
+  "version": "1.0.0",
+  "description": "Curso practico de consumo de API con javascript en Platzi",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jahiker/practica-consumo-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jahiker/practica-consumo-api/issues"
+  },
+  "homepage": "https://github.com/Jahiker/practica-consumo-api#readme"
+}
