@@ -6,7 +6,7 @@ function navigator() {
 
   if (location.hash.startsWith("#trends")) {
     trendsPage();
-  } else if (location.hash.startsWith("#search")) {
+  } else if (location.hash.startsWith("#search=")) {
     searchPage();
   } else if (location.hash.startsWith("#movie=")) {
     movieDetailsPage();
@@ -19,6 +19,10 @@ function navigator() {
 
 function homePage() {
   console.log("HOME");
+  
+  headerSection.classList.remove("header-container--long");
+  headerSection.sttyle.background = "";
+
   getCategoriesPreview();
   getTrendingMoviesPreview();
 }
