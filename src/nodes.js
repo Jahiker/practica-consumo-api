@@ -7,14 +7,6 @@ const categoriesPreviewSection = $('#categoriesPreview');
 const genericSection = $('#genericList');
 const movieDetailSection = $('#movieDetail');
 
-console.log("SECTIONS", {
-    headerSection,
-    trendingPreviewSection,
-    categoriesPreviewSection,
-    genericSection,
-    movieDetailSection
-});
-
 // Lists & Containers
 const searchForm = $('#searchForm');
 const trendingMoviesPreviewList = $('.trendingPreview-movieList');
