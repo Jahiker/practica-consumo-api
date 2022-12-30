@@ -133,4 +133,6 @@ function trendsPage() {
   categoriesPreviewSection.classList.add("inactive");
   genericSection.classList.remove("inactive");
   movieDetailSection.classList.add("inactive");
+
+  getTrendingMovies();
 }

@@ -83,3 +83,12 @@ async function getMoviesBySearch(query) {
 
   renderMovieList(movies, genericSection);
 }
+
+async function getTrendingMovies() {
+  const { data } = await api("/trending/movie/day");
+  const movies = data.results;
+
+  headerCategoryTitle.innerHTML = "Tendencias";
+
+  renderMovieList(movies, genericSection);
+}
