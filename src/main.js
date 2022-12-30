@@ -72,3 +72,14 @@ async function getMoviesByCategory(category) {
 
   renderMovieList(movies, genericSection);
 }
+
+async function getMoviesBySearch(query) {
+  const { data } = await api("/search/movie", {
+    params: {
+      query
+    }
+  });
+  const movies = data.results;
+
+  renderMovieList(movies, genericSection);
+}
