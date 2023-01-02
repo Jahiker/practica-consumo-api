@@ -77,22 +77,25 @@ function categoriesPage() {
 }
 
 function movieDetailsPage() {
-  console.log("MOVIE");
+  console.log('Movie!!');
 
-  headerSection.classList.add("header-container--long");
-  // headerSection.style.background = "";
+  headerSection.classList.add('header-container--long');
+  // headerSection.style.background = '';
 
-  arrowBtn.classList.remove("inactive");
-  arrowBtn.classList.add("header-arrow--white");
-  headerTitle.classList.add("inactive");
-  headerCategoryTitle.classList.add("inactive");
-  searchForm.classList.add("inactive");
+  arrowBtn.classList.remove('inactive');
+  arrowBtn.classList.add('header-arrow--white');
+  headerTitle.classList.add('inactive');
+  headerCategoryTitle.classList.add('inactive');
+  searchForm.classList.add('inactive');
 
-  trendingPreviewSection.classList.add("inactive");
-  categoriesPreviewSection.classList.add("inactive");
-  genericSection.classList.add("inactive");
-  movieDetailSection.classList.remove("inactive");
-  add;
+  trendingPreviewSection.classList.add('inactive');
+  categoriesPreviewSection.classList.add('inactive');
+  genericSection.classList.add('inactive');
+  movieDetailSection.classList.remove('inactive');
+
+  const [,id] = window.location.hash.split("=");
+
+  getMovieById(id);
 }
 
 function searchPage() {

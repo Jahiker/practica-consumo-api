@@ -15,6 +15,10 @@ function renderMovieList(movies, container) {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
 
+    movieContainer.addEventListener("click", () => {
+      location.hash = `movie=${movie.id}`
+    })
+
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.alt = movie.title;
@@ -91,4 +95,16 @@ async function getTrendingMovies() {
   headerCategoryTitle.innerHTML = "Tendencias";
 
   renderMovieList(movies, genericSection);
+}
+
+async function getMovieById(movie_id) {
+  const { data: movie } = await api("/movie/" + movie_id);
+
+  console.log(movie);
+   
+  movieDetailTitle.textContent = movie.title;
+  movieDetailDescription.textContent = movie.overview;
+  movieDetailScore.textContent = movie.vote_average;
+
+  // getMovieById(movies, genericSection);
 }
