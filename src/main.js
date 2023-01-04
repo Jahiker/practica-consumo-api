@@ -8,21 +8,32 @@ const api = axios.create({
   },
 });
 
+let observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.img;
+    }
+  })
+});
+
 function renderMovieList(movies, container) {
   container.innerHTML = "";
-
+  
   movies.forEach((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
-
+    
     movieContainer.addEventListener("click", () => {
       location.hash = `movie=${movie.id}`
     })
-
+    
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.alt = movie.title;
-    movieImg.src = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
+    // movieImg.src = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
+    movieImg.dataset.img = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
+
+    observer.observe(movieImg);
 
     movieContainer.appendChild(movieImg);
     container.appendChild(movieContainer);

@@ -1,3 +1,33 @@
 API Key (v3 auth): 1af8f392fdd2d731e47402f5d44e428e
 Example API Request: https://api.themoviedb.org/3/movie/550?api_key=1af8f392fdd2d731e47402f5d44e428e 
 API Read Access Token (v4 auth): eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxYWY4ZjM5MmZkZDJkNzMxZTQ3NDAyZjVkNDRlNDI4ZSIsInN1YiI6IjYxODg3YTMwZDM4OGFlMDA0MzAxN2VhMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rdX0w9WbYE5HkhtHrw0AQNDYNFwN0GzlhtBlgbIUjsg
+
+## CACHE:
+-- Es la forma de decirle al navegador que siempre nos traiga la ultima informacion o que por el contrario nos traiga la informacion almacenada.
+
+-- default
+-- no-store
+-- reload 
+-- no-cache 
+-- force-cache 
+-- only-if-cached 
+
+## MEMOIZATION:
+-- Guardar los calculos que ya hicimos para no repetirlos 
+
+-- crear un objeto
+-- Preguntar si el objeto tiene la informacion que necesitamos 
+-- Si tenemos la informacion, usamos la ya antes almacenada 
+-- Si no la tenemos, hacemos una nueva consulta y guardamos nuevamente el objeto 
+
+-- La informacion se pierde cuando recargamos la pagina 
+
+-- POSIBLES PROBLEMA:
+-- Como sabemos si la informacion cambio en el backend 
+-- La cache o memoizacion esta desactualizada?
+
+## LOADING SCREENS
+-- Haz reconocible el estado de carga 
+-- Haz que la carga sea tolerable, incluso divertida 
+
+## INTERSECTION OBSERVER 
