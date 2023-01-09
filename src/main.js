@@ -8,9 +8,11 @@ const api = axios.create({
   },
 });
 
+const defualtImage = "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916";
+
 let observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if(entry.isIntersecting) {
+    if(entry.isIntersecting && entry.target.dataset.img) {
       entry.target.src = entry.target.dataset.img;
     }
   })
@@ -30,8 +32,9 @@ function renderMovieList(movies, container) {
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.alt = movie.title;
-    // movieImg.src = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
-    movieImg.dataset.img = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
+    movieImg.src = "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916"
+
+    movieImg.dataset.img = movie.poster_path ?  "https://image.tmdb.org/t/p/w300" + movie.poster_path : defualtImage;
 
     observer.observe(movieImg);
 
