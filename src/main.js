@@ -8,33 +8,40 @@ const api = axios.create({
   },
 });
 
-const defualtImage = "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916";
+const defualtImage =
+  "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916";
 
 let observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting && entry.target.dataset.img) {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting && entry.target.dataset.img) {
       entry.target.src = entry.target.dataset.img;
     }
-  })
+  });
 });
 
-function renderMovieList(movies, container) {
-  container.innerHTML = "";
-  
+function renderMovieList(movies, container, clean = true) {
+
+  if (clean) {
+    container.innerHTML = "";
+  }
+
   movies.forEach((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
-    
+
     movieContainer.addEventListener("click", () => {
-      location.hash = `movie=${movie.id}`
-    })
-    
+      location.hash = `movie=${movie.id}`;
+    });
+
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.alt = movie.title;
-    movieImg.src = "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916"
+    movieImg.src =
+      "https://ps.w.org/dummy-images/assets/icon-256x256.png?rev=2024916";
 
-    movieImg.dataset.img = movie.poster_path ?  "https://image.tmdb.org/t/p/w300" + movie.poster_path : defualtImage;
+    movieImg.dataset.img = movie.poster_path
+      ? "https://image.tmdb.org/t/p/w300" + movie.poster_path
+      : defualtImage;
 
     observer.observe(movieImg);
 
@@ -81,8 +88,8 @@ async function getMoviesByCategory(category) {
   const [genre, title] = category;
   const { data } = await api("/discover/movie", {
     params: {
-      with_genres: genre
-    }
+      with_genres: genre,
+    },
   });
   const movies = data.results;
 
@@ -94,21 +101,42 @@ async function getMoviesByCategory(category) {
 async function getMoviesBySearch(query) {
   const { data } = await api("/search/movie", {
     params: {
-      query
-    }
+      query,
+    },
   });
   const movies = data.results;
 
   renderMovieList(movies, genericSection);
 }
 
-async function getTrendingMovies() { 
-  const { data } = await api("/trending/movie/day");
+async function getTrendingMovies(page = 1) {
+  const { data } = await api("/trending/movie/day", {
+    params: {
+      page,
+    },
+  });
+
   const movies = data.results;
 
   headerCategoryTitle.innerHTML = "Tendencias";
 
-  renderMovieList(movies, genericSection);
+  renderMovieList(movies, genericSection, false);
+
+  const btnLoadMore = document.createElement("button");
+  btnLoadMore.innerText = "Cargar más";
+  btnLoadMore.style.flex = "0 0 100%";
+  btnLoadMore.style.margin = "20px auto";
+
+  btnLoadMore.addEventListener("click", (event) => {
+    event.preventDefault();
+    getPaginatedTrendingMovies(page + 1);
+  });
+  
+  genericSection.appendChild(btnLoadMore);
+}
+
+async function getPaginatedTrendingMovies(nextPage) {
+  getTrendingMovies(nextPage);
 }
 
 async function getMovieById(movie_id) {
@@ -117,7 +145,7 @@ async function getMovieById(movie_id) {
   const movieImgUrl = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
 
   headerSection.style.background = `linear-gradient(180deg, rgba(0, 0, 0, 0.35) 19.27%, rgba(0, 0, 0, 0) 29.17%), url(${movieImgUrl})`;
-   
+
   movieDetailTitle.textContent = movie.title;
   movieDetailDescription.textContent = movie.overview;
   movieDetailScore.textContent = movie.vote_average;
@@ -129,6 +157,6 @@ async function getMovieById(movie_id) {
 async function getRelatedMoviesId(movie_id) {
   const { data } = await api("/movie/" + movie_id + "/recommendations");
   const relatedMovies = data.results;
-  
+
   renderMovieList(relatedMovies, relatedMoviesContainer);
-}  
+}
