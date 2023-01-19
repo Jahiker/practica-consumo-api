@@ -20,7 +20,6 @@ let observer = new IntersectionObserver((entries) => {
 });
 
 function renderMovieList(movies, container, clean = true) {
-
   if (clean) {
     container.innerHTML = "";
   }
@@ -117,22 +116,20 @@ async function getTrendingMovies(page = 1) {
   });
 
   const movies = data.results;
-
-  headerCategoryTitle.innerHTML = "Tendencias";
-
-  renderMovieList(movies, genericSection, false);
-
-  const btnLoadMore = document.createElement("button");
-  btnLoadMore.innerText = "Cargar más";
-  btnLoadMore.style.flex = "0 0 100%";
-  btnLoadMore.style.margin = "20px auto";
-
-  btnLoadMore.addEventListener("click", (event) => {
-    event.preventDefault();
-    getPaginatedTrendingMovies(page + 1);
-  });
   
-  genericSection.appendChild(btnLoadMore);
+  headerCategoryTitle.innerHTML = "Tendencias";
+  
+  renderMovieList(movies, genericSection, false);
+  
+  window.addEventListener("scroll", (e) => {
+    const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
+    
+    const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
+
+    if (scrollIsBottom) {
+      getPaginatedTrendingMovies(page + 1);
+    }
+  });
 }
 
 async function getPaginatedTrendingMovies(nextPage) {
