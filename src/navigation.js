@@ -17,16 +17,25 @@ window.addEventListener("DOMContentLoaded", navigator, false);
 window.addEventListener("hashchange", navigator, false);
 window.addEventListener("scroll", infiniteScroll, { passive: false });
 
-// window.addEventListener("scroll", () => {
-//   const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
+window.addEventListener("scroll", (e) => {
+  const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
 
-//   const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
+  const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
 
-//   if (scrollIsBottom) {
-//     page++;
-//     getPaginatedTrendingMovies(page);
-//   }
-// });
+  if (scrollIsBottom) {
+    if (location.hash.startsWith("#trends")) {
+      getTrendingMovies(page);
+    } else if (location.hash.startsWith("#search=")) {
+      const [, query] = window.location.hash.split("=");
+      getMoviesBySearch(query, page);
+    } else if (location.hash.startsWith("#category=")) {
+      const category = window.location.hash.split("=")[1].split("-");
+      category[1] = category[1].replaceAll("%20", " ");
+      getMoviesByCategory(category, page);
+    }
+    page++;
+  }
+});
 
 function navigator() {
   console.log({ location });
@@ -88,7 +97,7 @@ function categoriesPage() {
   const category = window.location.hash.split("=")[1].split("-");
   category[1] = category[1].replaceAll("%20", " ");
 
-  getMoviesByCategory(category);
+  getMoviesByCategory(category, page);
 }
 
 function movieDetailsPage() {
@@ -132,7 +141,7 @@ function searchPage() {
 
   const [, query] = window.location.hash.split("=");
 
-  getMoviesBySearch(query);
+  getMoviesBySearch(query, page);
 }
 
 function trendsPage() {

@@ -83,11 +83,13 @@ async function getCategoriesPreview() {
   renderCategories(categories, categoriesPreviewList);
 }
 
-async function getMoviesByCategory(category) {
+async function getMoviesByCategory(category, page = 1) {
+  console.log("category", category);
   const [genre, title] = category;
   const { data } = await api("/discover/movie", {
     params: {
       with_genres: genre,
+      page
     },
   });
   const movies = data.results;
@@ -97,10 +99,11 @@ async function getMoviesByCategory(category) {
   renderMovieList(movies, genericSection);
 }
 
-async function getMoviesBySearch(query) {
+async function getMoviesBySearch(query, page = 1) {
   const { data } = await api("/search/movie", {
     params: {
       query,
+      page
     },
   });
   const movies = data.results;
@@ -109,6 +112,7 @@ async function getMoviesBySearch(query) {
 }
 
 async function getTrendingMovies(page = 1) {
+
   const { data } = await api("/trending/movie/day", {
     params: {
       page,
@@ -121,15 +125,19 @@ async function getTrendingMovies(page = 1) {
   
   renderMovieList(movies, genericSection, false);
   
-  window.addEventListener("scroll", (e) => {
-    const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
+  // window.addEventListener("scroll", (e) => {
+  //   const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
     
-    const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
+  //   const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 15;
 
-    if (scrollIsBottom) {
-      getPaginatedTrendingMovies(page + 1);
-    }
-  });
+  //   if (scrollIsBottom) {
+  //     // getPaginatedTrendingMovies(page + 1);
+  //     // getTrendingMovies(page + 1);
+  //     console.log("page", page);
+  //     page++;
+  //   }
+  // });
+
 }
 
 async function getPaginatedTrendingMovies(nextPage) {
