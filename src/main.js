@@ -96,7 +96,7 @@ async function getMoviesByCategory(category, page = 1) {
 
   headerCategoryTitle.innerHTML = title;
 
-  renderMovieList(movies, genericSection);
+  renderMovieList(movies, genericSection, false);
 }
 
 async function getMoviesBySearch(query, page = 1) {
@@ -108,7 +108,7 @@ async function getMoviesBySearch(query, page = 1) {
   });
   const movies = data.results;
 
-  renderMovieList(movies, genericSection);
+  renderMovieList(movies, genericSection, false);
 }
 
 async function getTrendingMovies(page = 1) {
@@ -140,7 +140,7 @@ async function getTrendingMovies(page = 1) {
 
 }
 
-async function getPaginatedTrendingMovies(nextPage) {
+function getPaginatedTrendingMovies(nextPage) {
   getTrendingMovies(nextPage);
 }
 
